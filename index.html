@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JurisControl | Dashboard Operacional</title>
+    <link rel="stylesheet" href="Css/style.css">
+    <link rel="icon" type="Assets" href="Assets/image.ico">
+</head>
+<body>
+    <header>
+        <div class="header-content" style="display: flex; align-items: center; justify-content: center; gap: 10px;">
+        <img src="Assets/favicon.ico" alt="Logo CJuris" style="width: 40px; height: 40px; border-radius: 50%;">
+        <h1>Controlador de Ações Jurídicas - CJuris</h1> <br>
+</div>
+    <p>Sistema de Gestão de Processos Jurídicos</p>
+    </header>
+
+    <main class="container">
+        <section class="banner">
+            <img src="Assets/Img-1-Controle Jurídico.png" alt="Estátua da Justiça Horizontal">
+        </section>
+
+        <section class="actions">
+            <h2>Ações Rápidas</h2>
+            <div class="grid-buttons">
+                <button onclick="novaAcao()" class="btn btn-add">➕ Novo Processo</button>
+                <button onclick="verPrazos()" class="btn btn-alert">📅 Ver Prazos</button>
+                <button onclick="listarAdvogados()" class="btn btn-info">👨‍⚖️ Advogados</button>
+                <button onclick="gerarRelatorio()" class="btn btn-print">📄 Relatório Mensal</button>
+            </div>
+        </section>
+
+        <section id="status-painel" class="status-box">
+            <p>Aguardando comando...</p>
+        </section>
+    </main>
+
+    <script src="Js/main.js"></script>
+</body>
+
+<footer class="main-footer">
+    <div class="footer-content">
+        <p>&copy; 2026 CJuris - Todos os direitos reservados.</p>
+        <p>Desenvolvido por <span class="brand">KynneTech</span></p>
+        <div class="footer-links">
+            <a href="#">Suporte</a> | 
+            <a href="#">Privacidade</a>
+        </div>
+    </div>
+</footer>
+</html>
