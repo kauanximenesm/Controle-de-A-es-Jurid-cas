@@ -1,0 +1,159 @@
+/* 1. CONFIGURAÇÕES BASE */
+:root {
+    --primary: #2c3e50;
+    --accent: #3498db;
+    --white: #ffffff;
+    --bg-body: #f4f7f6;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background-color: var(--bg-body);
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Garante que tudo aponte para o centro */
+}
+
+/* 2. HEADER E FOOTER (LARGURA TOTAL) */
+header, footer {
+    width: 100%;
+    text-align: center;
+    background-color: var(--primary);
+    color: white;
+}
+
+header {
+    padding: 40px 20px;
+    border-bottom: 5px solid var(--accent);
+}
+
+/* 3. CONTAINER PRINCIPAL (CONTROLA O ALINHAMENTO) */
+main {
+    width: 100%;
+    max-width: 1200px; /* Aumentei para ocupar mais a tela */
+    padding: 40px 20px;
+}
+
+/* 4. CARD DE BOAS-VINDAS */
+.hero-landing {
+    background: var(--white);
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    overflow: hidden;
+    margin-bottom: 50px;
+    text-align: center;
+}
+
+.hero-landing-banner {
+    width: 100%;
+    height: 350px;
+    
+}
+
+.hero-landing-banner img {
+    
+    object-fit: cover; 
+    width: 100%;
+    height: 380px; /* Aumente de 220px para 300px para dar mais espaço vertical */
+    overflow: hidden;
+    
+}
+
+
+
+.hero-content {
+    padding: 50px;
+}
+
+/* 5. GRID DE BENEFÍCIOS (AQUI ESTAVA O ERRO) */
+.features-grid {
+    display: grid;
+    /* Força 3 colunas iguais em telas grandes */
+    grid-template-columns: repeat(3, 1fr); 
+    gap: 30px;
+    margin: 40px 0;
+}
+
+.feature-card {
+    background: var(--white);
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    border-top: 5px solid var(--accent);
+    text-align: center;
+}
+
+/* 6. SEÇÃO DE TÍTULOS (POR QUE O CJURIS / DUVIDAS) */
+.section-title {
+    width: 100%;
+    text-align: left; /* Ou center, se preferir */
+    margin: 40px 0 20px 0;
+    font-size: 1.8rem;
+    color: var(--primary);
+    border-left: 5px solid var(--accent);
+    padding-left: 15px;
+}
+
+/* 7. NÚMEROS (ESTATÍSTICAS) */
+.stats-container {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+    padding: 60px 0;
+    background: white;
+    margin: 40px 0;
+    border-radius: 15px;
+}
+
+.stat-item {
+    text-align: center;
+}
+
+.stat-item h2 {
+    font-size: 2.5rem;
+    color: #6c5ce7; /* Mantendo o roxo nos números para destaque */
+}
+
+/* 8. FOOTER */
+footer {
+    padding: 50px 20px;
+    background-color: #1a252f;
+}
+
+/* RESPONSIVIDADE (PARA CELULAR) */
+@media (max-width: 768px) {
+    .features-grid {
+        grid-template-columns: 1fr; /* 1 coluna no celular */
+    }
+    .stats-container {
+        flex-direction: column;
+        gap: 30px;
+    }
+}
+.btn-entrar {
+    display: inline-block;
+    background-color: #3498db; /* Azul de destaque */
+    color: #ffffff !important;  /* Texto branco */
+    padding: 16px 45px;        /* Tamanho do botão */
+    font-size: 1.1rem;
+    font-weight: bold;
+    text-decoration: none;     /* Remove o sublinhado de link */
+    border-radius: 50px;       /* Formato de pílula */
+    margin-top: 25px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
+    border: none;
+}
+
+.btn-entrar:hover {
+    background-color: #2980b9; /* Azul um pouco mais escuro no hover */
+    transform: translateY(-3px); /* Efeito de levante */
+    box-shadow: 0 6px 20px rgba(52, 152, 219, 0.5);
+    color: #ffffff !important;
+}

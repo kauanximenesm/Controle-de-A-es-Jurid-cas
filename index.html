@@ -4,49 +4,100 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>JurisControl | Dashboard Operacional</title>
-    <link rel="stylesheet" href="Css/style.css">
-    <link rel="icon" type="Assets" href="Assets/image.ico">
+    <link rel="stylesheet" href="Css/global.css">
+    <link rel="icon" href="Assets/favicon.ico">
 </head>
 <body>
+
     <header>
-        <div class="header-content" style="display: flex; align-items: center; justify-content: center; gap: 10px;">
-        <img src="Assets/favicon.ico" alt="Logo CJuris" style="width: 40px; height: 40px; border-radius: 50%;">
-        <h1>Controlador de Ações Jurídicas - CJuris</h1> <br>
-</div>
-    <p>Sistema de Gestão de Processos Jurídicos</p>
+        <div class="header-content">
+            <img src="Assets/favicon.ico" alt="Logo CJuris" style="width: 40px; height: 40px; border-radius: 50%;">
+            <h1>Controlador de Ações Jurídicas - CJuris</h1>
+        </div>
+        <p>Sistema de Gestão de Processos Jurídicos</p>
     </header>
 
     <main class="container">
-        <section class="banner">
-            <img src="Assets/Img-1-Controle Jurídico.png" alt="Estátua da Justiça Horizontal">
-        </section>
-
-        <section class="actions">
-            <h2>Ações Rápidas</h2>
-            <div class="grid-buttons">
-                <button onclick="novaAcao()" class="btn btn-add">➕ Novo Processo</button>
-                <button onclick="verPrazos()" class="btn btn-alert">📅 Ver Prazos</button>
-                <button onclick="listarAdvogados()" class="btn btn-info">👨‍⚖️ Advogados</button>
-                <button onclick="gerarRelatorio()" class="btn btn-print">📄 Relatório Mensal</button>
+        <section class="hero-landing">
+            <div class="hero-landing-banner">
+                <img src="Assets/Img-1-Controle Jurídico.png" alt="Banner CJuris">
+            </div>
+            <div class="hero-content">
+                <h2>Gestão Jurídica Inteligente</h2>
+                <p>O CJuris é a plataforma completa para assessores e advogados controlarem processos, prazos e relatórios em um só lugar.</p>
+                <a href="PaginaCentral.html" class="btn-entrar">Entrar no Sistema</a> 
             </div>
         </section>
 
-        <section id="status-painel" class="status-box">
-            <p>Aguardando comando...</p>
+        <div class="features-grid">
+            <div class="feature-card">
+                <h3>📊 Controle Total</h3>
+                <p>Monitore o status de cada ação jurídica em tempo real.</p>
+            </div>
+            <div class="feature-card">
+                <h3>📅 Prazos</h3>
+                <p>Nunca mais perca um prazo processual com nossos alertas.</p>
+            </div>
+        </div>
+
+        <h2 class="section-title">Por que o CJuris?</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <span>🛡️</span>
+                <h3>Segurança Máxima</h3>
+                <p>Dados protegidos por criptografia de nível bancário.</p>
+            </div>
+            <div class="feature-card">
+                <span>⚡</span>
+                <h3>Agilidade Operacional</h3>
+                <p>Reduza em até 40% o tempo gasto com tarefas burocráticas.</p>
+            </div>
+            <div class="feature-card">
+                <span>📈</span>
+                <h3>Visão Estratégica</h3>
+                <p>Relatórios detalhados para análise de performance.</p>
+            </div>
+        </div>
+
+        <section class="stats-container">
+            <div class="stat-item">
+                <h2>+500</h2>
+                <p>Processos Ativos</p>
+            </div>
+            <div class="stat-item">
+                <h2>100%</h2>
+                <p>Segurança</p>
+            </div>
+            <div class="stat-item">
+                <h2>24/7</h2>
+                <p>Suporte Técnico</p>
+            </div>
         </section>
+
+        <h2 class="section-title">Dúvidas Frequentes</h2>
+        <div class="faq-container" style="max-width: 800px; margin: 0 auto;">
+            <details style="padding: 15px; background: white; margin-bottom: 10px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.05);">
+                <summary style="font-weight: bold; cursor: pointer;">O sistema integra com tribunais?</summary>
+                <p style="margin-top: 10px; color: #666;">Sim, o CJuris possui integração nativa com os principais sistemas do Brasil.</p>
+            </details>
+            <details style="padding: 15px; background: white; margin-bottom: 10px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.05);">
+                <summary style="font-weight: bold; cursor: pointer;">Como é feito o backup dos dados?</summary>
+                <p style="margin-top: 10px; color: #666;">Realizamos backups automáticos a cada 6 horas em servidores redundantes.</p>
+            </details>
+        </div>
     </main>
+
+    <footer class="main-footer">
+        <div class="footer-content">
+            <p>&copy; 2026 CJuris - Todos os direitos reservados.</p>
+            <p>Desenvolvido por <span class="brand">KynneTech</span></p>
+            <div class="footer-links">
+                <a href="#">Suporte</a> | 
+                <a href="#">Privacidade</a>
+            </div>
+        </div>
+    </footer>
 
     <script src="Js/main.js"></script>
 </body>
-
-<footer class="main-footer">
-    <div class="footer-content">
-        <p>&copy; 2026 CJuris - Todos os direitos reservados.</p>
-        <p>Desenvolvido por <span class="brand">KynneTech</span></p>
-        <div class="footer-links">
-            <a href="#">Suporte</a> | 
-            <a href="#">Privacidade</a>
-        </div>
-    </div>
-</footer>
 </html>
