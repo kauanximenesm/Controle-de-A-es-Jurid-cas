@@ -1,0 +1,102 @@
+/* Css/login.css */
+.login-page {
+    background: linear-gradient(135deg, #2c3e50 0%, #000000 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.login-container {
+    width: 100%;
+    max-width: 400px;
+    padding: 20px;
+}
+
+.login-box {
+    background: white;
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+    text-align: center;
+}
+
+.login-logo {
+    width: 60px;
+    margin-bottom: 20px;
+    border-radius: 50%;
+}
+
+.login-box h2 {
+    margin-bottom: 30px;
+    color: #2c3e50;
+}
+
+.input-group {
+    text-align: left;
+    margin-bottom: 20px;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 1rem;
+}
+
+.btn-login {
+    width: 100%;
+    padding: 12px;
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.btn-login:hover {
+    background-color: #2980b9;
+}
+
+.login-footer {
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px solid #eee;
+}
+
+/* Estilo do botão de cadastro do 5o Sprint */
+.btn-secondary {
+    background: none;
+    border: 2px solid #3498db;
+    color: #3498db;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: 0.3s;
+}
+
+.btn-secondary:hover {
+    background-color: #3498db;
+    color: white;
+}
+
+.back-link {
+    display: block;
+    margin-top: 20px;
+    font-size: 0.8rem;
+    color: #7f8c8d;
+    text-decoration: none;
+}

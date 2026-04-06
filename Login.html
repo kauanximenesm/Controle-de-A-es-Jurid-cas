@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | CJuris</title>
+    <link rel="stylesheet" href="Css/global.css">
+    <link rel="stylesheet" href="Css/login.css">
+</head>
+<body class="login-page">
+    <div class="login-container">
+        <div class="login-box">
+            <img src="Assets/favicon.ico" alt="Logo CJuris" class="login-logo">
+            <h2>Acesse o Sistema</h2>
+            <form id="loginForm">
+                <div class="input-group">
+                    <label for="email">E-mail</label>
+                    <input type="email" id="email" placeholder="seu@email.com" required>
+                </div>
+                <div class="input-group">
+                    <label for="password">Senha</label>
+                    <input type="password" id="password" placeholder="••••••••" required>
+                </div>
+                
+                <button type="submit" class="btn-login">Entrar</button>
+            </form>
+
+            <div class="login-footer">
+                <p>Novo por aqui?</p>
+                <button class="btn-secondary" onclick="alert('Funcionalidade disponível no 5º Sprint')">
+                    Cadastrar Usuário
+                </button>
+            </div>
+            
+            <a href="index.html" class="back-link">← Voltar para a Home</a>
+        </div>
+    </div>
+</body>
+</html>
