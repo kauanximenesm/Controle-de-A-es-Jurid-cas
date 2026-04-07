@@ -6,7 +6,7 @@ document.getElementById('formCadastro').addEventListener('submit', async (e) => 
     const senha = document.getElementById('senha').value;
 
     try {
-        const response = await fetch('http://localhost:3000/cadastrar', {
+        const response = await fetch('https://controle-de-a-es-jurid-cas.onrender.com', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
