@@ -5,7 +5,7 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
     const senha = document.getElementById('password').value; // Usando o id 'password' do seu HTML
 
     try {
-        const response = await fetch('https://controle-de-a-es-jurid-cas.onrender.com', {
+        const response = await fetch('https://controle-de-a-es-jurid-cas.onrender.com/login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -24,6 +24,6 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
         }
     } catch (error) {
         console.error("Erro ao conectar:", error);
-        alert("Servidor offline! Ligue o servidor com 'node server.js'");
+        alert("Servidor acordando ou offline! Tente novamente em alguns segundos.");
     }
 });

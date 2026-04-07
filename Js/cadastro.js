@@ -6,7 +6,7 @@ document.getElementById('formCadastro').addEventListener('submit', async (e) => 
     const senha = document.getElementById('senha').value;
 
     try {
-        const response = await fetch('https://controle-de-a-es-jurid-cas.onrender.com', {
+        const response = await fetch('https://controle-de-a-es-jurid-cas.onrender.com/cadastrar', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -24,6 +24,6 @@ document.getElementById('formCadastro').addEventListener('submit', async (e) => 
         }
     } catch (error) {
         console.error("Erro ao conectar com o servidor:", error);
-        alert("O servidor está desligado! Rode 'node server.js' no terminal.");
+        alert("Servidor acordando ou offline! Tente novamente em alguns segundos.");
     }
 });
