@@ -1,0 +1,27 @@
+{
+  "name": "controle-juridico",
+  "version": "1.0.0",
+  "description": "CJuris - Controle de Ações Jurídicas",
+  "main": "server.js",
+  "scripts": {
+    "start": "node Js/server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kauanximenesm/Controle-de-A-es-Jurid-cas.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/kauanximenesm/Controle-de-A-es-Jurid-cas/issues"
+  },
+  "homepage": "https://github.com/kauanximenesm/Controle-de-A-es-Jurid-cas#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "mysql2": "^3.6.0"
+  }
+}
