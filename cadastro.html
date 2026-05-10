@@ -25,12 +25,23 @@
                 </div>
                 <div class="input-group">
                     <label for="senha">Senha</label>
-                    <input type="password" id="senha" placeholder="Crie uma senha" required>
+                    <input type="password" id="senha" 
+                    placeholder="Mín. 8 caracteres, 1 número e 1 especial" 
+                    pattern="(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,}" 
+                    title="A senha deve ter pelo menos 8 caracteres, incluindo um número e um caractere especial (!@#$%^&*)"
+                    required>
                 </div>
                 
                 <button type="submit" class="btn-login">Finalizar Cadastro</button>
             </form>
-
+            <label for="perfil">Tipo de Perfil:</label>
+            <select id="perfil" name="perfil" class="meu-input-estilizado">
+                <option value="1">Advogado</option>
+                <option value="2">Assistente Jurídico</option>
+                <option value="3">Coordenador</option>
+                <option value="4">Cliente</option>
+                <option value="5">Administrador</option>
+            </select>
             <div class="login-footer">
                 <p>Já tem uma conta?</p>
                 <a href="login.html" class="back-link" style="color: #3498db; font-weight: bold;">Fazer Login</a>

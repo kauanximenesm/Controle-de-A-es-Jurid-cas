@@ -107,3 +107,31 @@ main {
     flex: 1;
 }
 
+.btn-admin { display: none; } /* Começa escondido */
+.btn-admin {
+    background: linear-gradient(135deg, #3498db, #2980b9); /* Degradê suave */
+    color: white;
+    padding: 12px 28px;
+    border: none;
+    border-radius: 50px; /* Botão arredondado estilo moderno */
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
+    margin: 20px auto;
+}
+
+.btn-admin i {
+    font-size: 20px; /* Tamanho do ícone */
+}
+
+.btn-admin:hover {
+    transform: scale(1.05); /* Aumenta levemente */
+    box-shadow: 0 6px 20px rgba(52, 152, 219, 0.5);
+    background: linear-gradient(135deg, #2980b9, #3498db);
+}

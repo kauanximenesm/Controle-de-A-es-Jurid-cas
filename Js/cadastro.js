@@ -26,4 +26,11 @@ document.getElementById('formCadastro').addEventListener('submit', async (e) => 
         console.error("Erro ao conectar com o servidor:", error);
         alert("Servidor acordando ou offline! Tente novamente em alguns segundos.");
     }
+    const senha = document.getElementById('senha').value;
+    const regexEspecial = /[!@#$%^&*(),.?":{}|<>]/;
+
+    if (!regexEspecial.test(senha)) {
+    alert("A senha precisa de pelo menos um caractere especial!");
+    return; // Para o envio
+}
 });

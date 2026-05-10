@@ -4,11 +4,11 @@ const cors = require('cors');
 
 const app = express();
 
-// Configurações para o servidor entender JSON e aceitar pedidos do seu site
+// Configurações para o servidor entender JSON e aceitar pedidos do site
 app.use(cors());
 app.use(express.json());
 
-// Conexão com o banco que você já tem no Filess.io
+// Conexão com o banco - Filess.io
 const db = mysql.createConnection({
     host: "opjbvk.h.filess.io",
     user: "Controle_juridico_peopleword",
@@ -58,7 +58,42 @@ app.post('/login', (req, res) => {
     });
 });
 
-// O servidor vai ficar ouvindo na porta 3000
+// O servidor vai na porta 3000
 app.listen(3000, () => {
     console.log("Servidor CJuris rodando na porta 3000");
 });
+
+// 1. LISTAR (Read)
+app.get('/usuarios', (req, res) => {
+    db.query("SELECT usuario_id, nome, login, atualizado_em FROM tbUsuarios", (err, result) => {
+        if (err) return res.status(500).json(err);
+        res.json(result);
+    });
+});
+
+// 2. EXCLUIR (Delete)
+app.delete('/usuarios/:id', (req, res) => {
+    const { id } = req.params;
+    db.query("DELETE FROM tbUsuarios WHERE usuario_id = ?", [id], (err, result) => {
+        if (err) return res.status(500).json(err);
+        res.json({ msg: "Usuário excluído com sucesso!" });
+    });
+});
+
+// 3. EDITAR (Update)
+app.put('/usuarios/:id', (req, res) => {
+    const { id } = req.params;
+    const { nome, login } = req.body;
+    
+    // atualizado_em = CURRENT_TIMESTAMP
+    const sql = "UPDATE tbUsuarios SET nome = ?, login = ?, atualizado_em = CURRENT_TIMESTAMP WHERE usuario_id = ?";
+    
+    db.query(sql, [nome, login, id], (err, result) => {
+        if (err) {
+            console.error("Erro ao editar usuário:", err);
+            return res.status(500).json({ msg: "Erro interno no servidor", error: err });
+        }
+        res.json({ msg: "Usuário atualizado com sucesso!" });
+    });
+});
+

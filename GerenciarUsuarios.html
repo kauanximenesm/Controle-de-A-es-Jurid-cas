@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Gestão de Usuários | CJuris</title>
+    <link rel="stylesheet" href="Css/global.css">
+    <link rel="stylesheet" href="Css/login.css">
+    <link rel="icon" href="Assets/favicon.ico">
+    <style>
+        /* Estilo rápido para a tabela ficar elegante */
+        .admin-container { padding: 40px; max-width: 900px; margin: auto; }
+        table { width: 100%; border-collapse: collapse; background: #2c3e50; color: white; border-radius: 10px; overflow: hidden; }
+        th, td { padding: 15px; text-align: left; border-bottom: 1px solid #34495e; }
+        th { background: #3498db; }
+        .btn-excluir { background: #e74c3c; border: none; padding: 5px 10px; color: white; cursor: pointer; border-radius: 4px; }
+        .btn-editar { background: #f1c40f; border: none; padding: 5px 10px; color: #2c3e50; cursor: pointer; border-radius: 4px; margin-right: 5px; }
+    </style>
+</head>
+<body class="login-page">
+    <div class="admin-container">
+        <h2 style="color: white; margin-bottom: 20px;">Gestão de Usuários</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>E-mail (Login)</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody id="tabelaCorpo">
+                </tbody>
+        </table>
+        <br>
+        <button onclick="window.location.href='PaginaCentral.html'" class="btn-login" style="width: 200px;">Voltar</button>
+    </div>
+
+    <script src="Js/gerenciar.js"></script>
+</body>
+</html>
