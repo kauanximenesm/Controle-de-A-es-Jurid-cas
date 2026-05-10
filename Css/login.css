@@ -100,3 +100,35 @@
     color: #7f8c8d;
     text-decoration: none;
 }
+
+/* Estilização do Label do Perfil */
+label[for="perfil"] {
+    display: block;
+    margin-top: 15px;
+    margin-bottom: 5px;
+    font-size: 14px;
+    color: #333; /* Ou a cor que você usa nos outros labels */
+    text-align: left;
+    font-weight: bold;
+}
+
+/* Estilização do Select (Caixa de Escolha) */
+.meu-input-estilizado {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #fff;
+    font-size: 16px;
+    color: #2c3e50;
+    cursor: pointer;
+    transition: border-color 0.3s ease;
+    margin-bottom: 20px; /* Espaço antes do rodapé */
+}
+
+/* Efeito ao clicar no select */
+.meu-input-estilizado:focus {
+    border-color: #3498db;
+    outline: none;
+    box-shadow: 0 0 5px rgba(52, 152, 219, 0.3);
+}
