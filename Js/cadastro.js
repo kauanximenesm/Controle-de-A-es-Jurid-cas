@@ -18,7 +18,7 @@ document.getElementById('formCadastro').addEventListener('submit', async (e) => 
 
         if (response.ok) {
             alert("Sucesso: " + result.msg);
-            window.location.href = "Login.html";
+            window.location.href = "login.html";
         } else {
             alert("Erro: " + result.msg);
         }
