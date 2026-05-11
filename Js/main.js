@@ -31,3 +31,19 @@ document.addEventListener("DOMContentLoaded", function() {
         document.getElementById('btnAdminGestao').style.display = 'flex';
     }
 });
+
+document.addEventListener("DOMContentLoaded", function() {
+    // 1. Busca o perfil que o login.js salvou no navegador
+    const perfil = localStorage.getItem('perfilUsuario'); 
+
+    // Debug: isso vai mostrar no F12 se o valor está chegando como '5'
+    console.log("Perfil detectado:", perfil);
+
+    // 2. Se for 5 (Administrador),força o botão a aparecer
+    if (perfil === '5') {
+        const btnAdmin = document.getElementById('btnAdminGestao');
+        if (btnAdmin) {
+            btnAdmin.style.display = 'flex'; // Mostra o botão com alinhamento flex
+        }
+    }
+});

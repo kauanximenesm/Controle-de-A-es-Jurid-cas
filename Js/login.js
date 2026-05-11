@@ -17,6 +17,8 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
 
         if (response.ok) {
             alert("Bem-vindo ao CJuris!");
+            // resultado é o que vem do seu servidor (res.json)
+            localStorage.setItem('perfilUsuario', result.perfil);
             // Redireciona para a página principal após o login
             window.location.href = "PaginaCentral.html"; 
         } else {
