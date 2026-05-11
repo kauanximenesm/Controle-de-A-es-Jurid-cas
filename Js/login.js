@@ -16,11 +16,17 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
         const result = await response.json();
 
         if (response.ok) {
-            alert("Bem-vindo ao CJuris!");
-            // resultado é o que vem do seu servidor (res.json)
-            localStorage.setItem('perfilUsuario', result.perfil);
-            // Redireciona para a página principal após o login
-            window.location.href = "PaginaCentral.html"; 
+        // ... dentro do if (response.ok)
+        console.log("Dados recebidos do servidor:", result); // ADICIONE ISSO PARA DEBUGAR
+        if (result.perfil) {
+        localStorage.setItem('perfilUsuario', result.perfil);
+        } else if (result.usuario && result.usuario.pessoa_tipo_id) {
+         // Caso seu servidor envie dentro de um objeto 'usuario'
+        localStorage.setItem('perfilUsuario', result.usuario.pessoa_tipo_id);
+        }
+
+        alert("Bem-vindo ao CJuris!");
+        window.location.href = "PaginaCentral.html";
         } else {
             alert("Erro: " + result.msg);
         }
