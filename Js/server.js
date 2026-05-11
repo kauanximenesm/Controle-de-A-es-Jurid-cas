@@ -44,16 +44,19 @@ app.post('/cadastrar', (req, res) => {
 // --- ROTA DE LOGIN (5º Sprint) ---
 app.post('/login', (req, res) => {
     const { login, senha } = req.body;
-    
     const sql = "SELECT * FROM tbUsuarios WHERE login = ? AND senha = ?";
-    
-    db.query(sql, [login, senha], (err, data) => {
+
+    db.query(sql, [login, senha], (err, result) => {
         if (err) return res.status(500).json(err);
         
-        if (data.length > 0) {
-            res.status(200).json({ msg: "Login realizado!", usuario: data[0] });
+        if (result.length > 0) {
+            // É AQUI O SEGREDO: Você precisa enviar o perfil de volta!
+            res.json({ 
+                msg: "Login realizado!", 
+                perfil: result[0].pessoa_tipo_id // Garanta que o nome da coluna está correto
+            });
         } else {
-            res.status(401).json({ msg: "E-mail ou senha incorretos" });
+            res.status(401).json({ msg: "Login ou senha incorretos!" });
         }
     });
 });
