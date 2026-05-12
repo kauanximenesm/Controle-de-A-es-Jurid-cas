@@ -133,3 +133,13 @@ app.post('/listar-pessoas', (req, res) => {
         res.json(result);
     });
 });
+
+app.post('/editar-pessoa', (req, res) => {
+    const { id, nome, cpf, nascimento, pessoa_tipo_id } = req.body;
+    const sql = "UPDATE tbPessoas SET nome = ?, cpf = ?, nascimento = ?, pessoa_tipo_id = ? WHERE pessoa_id = ?";
+
+    db.query(sql, [nome, cpf, nascimento, pessoa_tipo_id, id], (err, result) => {
+        if (err) return res.status(500).json(err);
+        res.json({ msg: "Dados atualizados!" });
+    });
+});
