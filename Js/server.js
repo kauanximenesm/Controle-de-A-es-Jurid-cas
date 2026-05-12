@@ -53,7 +53,7 @@ app.post('/login', (req, res) => {
             // É AQUI O SEGREDO: Você precisa enviar o perfil de volta!
             res.json({ 
                 msg: "Login realizado!", 
-                perfil: result[0].pessoa_tipo_id // Garanta que o nome da coluna está correto
+                perfil: result[0].atualizado_por // Garanta que o nome da coluna está correto
             });
         } else {
             res.status(401).json({ msg: "Login ou senha incorretos!" });
