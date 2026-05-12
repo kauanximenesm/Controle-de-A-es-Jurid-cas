@@ -5,7 +5,7 @@ document.getElementById('formPessoa').addEventListener('submit', async (e) => {
         nome: document.getElementById('p_nome').value,
         cpf: document.getElementById('p_cpf').value,
         nascimento: document.getElementById('p_nascimento').value,
-        pessoa_tipo_id: document.getElementById('p_tipo').value
+        pessoa_tipo_id: parseInt(document.getElementById('p_tipo').value)
     };
 
     try {
