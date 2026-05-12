@@ -27,7 +27,7 @@ db.connect((err) => {
 
 // --- ROTA DE CADASTRO (5º Sprint) ---
 app.post('/cadastrar', (req, res) => {
-    const { nome, login, senha } = req.body;
+    const { nome, login, senha, perfil} = req.body;
     
     // Comando SQL exato para sua tabela tbUsuarios
     const sql = "INSERT INTO tbUsuarios (nome, login, senha, atualizado_por) VALUES (?, ?, ?, ?)";
