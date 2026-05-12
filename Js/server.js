@@ -100,3 +100,17 @@ app.put('/usuarios/:id', (req, res) => {
     });
 });
 
+// --- ROTA DE CADASTRO DE PESSOAS (7º Sprint) ---
+app.post('/pessoas', (req, res) => {
+    const { nome, cpf, nascimento, pessoa_tipo_id } = req.body;
+
+    const sql = "INSERT INTO tbPessoas (nome, cpf, nascimento, pessoa_tipo_id) VALUES (?, ?, ?, ?)";
+
+    db.query(sql, [nome, cpf, nascimento, pessoa_tipo_id], (err, result) => {
+        if (err) {
+            console.error("Erro ao inserir pessoa:", err);
+            return res.status(500).json({ msg: "Erro ao salvar pessoa no banco", erro: err });
+        }
+        res.status(200).json({ msg: "Pessoa cadastrada com sucesso!" });
+    });
+});
