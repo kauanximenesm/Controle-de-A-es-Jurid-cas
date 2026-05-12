@@ -135,3 +135,33 @@ main {
     box-shadow: 0 6px 20px rgba(52, 152, 219, 0.5);
     background: linear-gradient(135deg, #2980b9, #3498db);
 }
+
+/* --- Ajuste de Alinhamento dos Ícones nos Botões (Foco Visual) --- */
+.grid-buttons .btn {
+    display: flex;         /* Ativa o modo Flexbox */
+    align-items: center;   /* Alinha verticalmente no centro */
+    justify-content: center; /* Alinha horizontalmente no centro */
+    gap: 10px;            /* Espaço de 10px entre o ícone e o texto */
+    padding: 12px 20px;   /* Ajuste do preenchimento interno */
+    font-size: 16px;      /* Tamanho da fonte */
+    font-weight: 600;     /* Deixa a fonte um pouco mais grossa */
+    border-radius: 8px;   /* Cantos arredondados profissionais */
+    transition: transform 0.2s, box-shadow 0.2s; /* Efeito suave */
+    border: none;         /* Remove bordas padrão */
+    cursor: pointer;      
+}
+
+/* Garante que o ícone do Material Icons tenha um tamanho padrão */
+.grid-buttons .btn i.material-icons {
+    font-size: 22px;     
+}
+
+/* Efeito de "apertar" ao clicar */
+.grid-buttons .btn:active {
+    transform: scale(0.98);
+}
+
+/* Efeito de sombra ao passar o mouse */
+.grid-buttons .btn:hover {
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
