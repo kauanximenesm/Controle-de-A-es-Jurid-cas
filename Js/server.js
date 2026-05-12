@@ -30,9 +30,9 @@ app.post('/cadastrar', (req, res) => {
     const { nome, login, senha } = req.body;
     
     // Comando SQL exato para sua tabela tbUsuarios
-    const sql = "INSERT INTO tbUsuarios (nome, login, senha) VALUES (?, ?, ?)";
+    const sql = "INSERT INTO tbUsuarios (nome, login, senha, atualizado_por) VALUES (?, ?, ?, ?)";
     
-    db.query(sql, [nome, login, senha], (err, result) => {
+    db.query(sql, [nome, login, senha, perfil], (err, result) => {
         if (err) {
             console.error(err);
             return res.status(500).json({ msg: "Erro ao gravar no banco" });
