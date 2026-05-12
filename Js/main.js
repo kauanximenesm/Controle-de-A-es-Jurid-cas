@@ -35,3 +35,13 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     }
 });
+
+document.addEventListener("DOMContentLoaded", function() {
+    const perfil = localStorage.getItem('perfilUsuario'); 
+    
+    // Perfil 5 = Admin, Perfil 1 = Advogado (ajuste o número se o seu Advogado for outro ID)
+    if (perfil == '5' || perfil == '1') {
+        const btn = document.getElementById('btnVerPessoas');
+        if (btn) btn.style.display = 'flex';
+    }
+});

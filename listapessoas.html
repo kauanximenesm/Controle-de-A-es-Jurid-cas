@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de Pessoas | CJuris</title>
+    <link rel="stylesheet" href="Css/style.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+        .tabela-pessoas { width: 100%; border-collapse: collapse; margin-top: 20px; background: white; color: #333; }
+        .tabela-pessoas th, .tabela-pessoas td { padding: 12px; border: 1px solid #ddd; text-align: left; }
+        .tabela-pessoas th { background-color: #3498db; color: white; }
+    </style>
+</head>
+<body style="background-color: #f4f7f6; padding: 20px;">
+    <h2>👤 Clientes e Pessoas Cadastradas</h2>
+    <table class="tabela-pessoas">
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>CPF</th>
+                <th>Nascimento</th>
+                <th>Tipo</th>
+            </tr>
+        </thead>
+        <tbody id="corpoTabela">
+            </tbody>
+    </table>
+    <br>
+    <button onclick="window.location.href='PaginaCentral.html'" class="btn btn-add">Voltar ao Painel</button>
+
+    <script>
+        async function carregarPessoas() {
+            const response = await fetch('https://controle-de-a-es-jur-cas.onrender.com/listar-pessoas', {
+                method: 'POST'
+            });
+            const dados = await response.json();
+            const tabela = document.getElementById('corpoTabela');
+
+            dados.forEach(p => {
+                const linha = `<tr>
+                    <td>${p.nome}</td>
+                    <td>${p.cpf}</td>
+                    <td>${new Date(p.nascimento).toLocaleDateString('pt-BR')}</td>
+                    <td>${p.tipo}</td>
+                </tr>`;
+                tabela.innerHTML += linha;
+            });
+        }
+        carregarPessoas();
+    </script>
+</body>
+</html>

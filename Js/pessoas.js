@@ -27,4 +27,17 @@ document.getElementById('formPessoa').addEventListener('submit', async (e) => {
         console.error("Erro ao conectar:", error);
         alert("Erro de conexão com o servidor.");
     }
-});
+})
+
+async function carregarListaPessoas() {
+    const response = await fetch('https://controle-de-a-es-jurid-cas.onrender.com/listar-pessoas', {
+        method: 'POST'
+    });
+    const pessoas = await response.json();
+    
+    // Aqui você usaria um forEach para montar as linhas de uma tabela 
+    // ou mostrar no painel de status
+    console.log("Pessoas cadastradas:", pessoas);
+}
+
+carregarListaPessoas();

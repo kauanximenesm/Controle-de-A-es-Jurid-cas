@@ -116,3 +116,30 @@ app.post('/pessoas', (req, res) => {
         res.status(200).json({ msg: "Pessoa cadastrada com sucesso!" });
     });
 });
+
+// --- ROTA PARA LISTAR PESSOAS (Sprint 7 - Visualização) ---
+app.post('/listar-pessoas', (req, res) => {
+    // Buscamos o nome da pessoa e o nome do tipo dela fazendo um JOIN
+    const sql = `
+        SELECT p.pessoa_id, p.nome, p.cpf, p.nascimento, t.nome as tipo 
+        FROM tbPessoas p 
+        JOIN tbPessoaTipo t ON p.pessoa_tipo_id = t.pessoa_tipo_id
+    `;
+
+    db.query(sql, (err, result) => {
+        if (err) return res.status(500).json(err);
+        res.json(result);
+    });
+});
+
+app.post('/listar-pessoas', (req, res) => {
+    const sql = `
+        SELECT p.nome, p.cpf, p.nascimento, t.nome as tipo 
+        FROM tbPessoas p 
+        LEFT JOIN tbPessoaTipo t ON p.pessoa_tipo_id = t.pessoa_tipo_id
+    `;
+    db.query(sql, (err, result) => {
+        if (err) return res.status(500).json(err);
+        res.json(result);
+    });
+});
