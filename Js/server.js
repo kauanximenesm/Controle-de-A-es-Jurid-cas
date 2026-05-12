@@ -133,13 +133,17 @@ app.post('/listar-pessoas', (req, res) => {
 });
 
 app.post('/listar-pessoas', (req, res) => {
+    // Usamos LEFT JOIN para garantir que, mesmo se o tipo estiver estranho, a pessoa apareça
     const sql = `
         SELECT p.nome, p.cpf, p.nascimento, t.nome as tipo 
         FROM tbPessoas p 
         LEFT JOIN tbPessoaTipo t ON p.pessoa_tipo_id = t.pessoa_tipo_id
     `;
     db.query(sql, (err, result) => {
-        if (err) return res.status(500).json(err);
+        if (err) {
+            console.error("Erro na listagem:", err);
+            return res.status(500).json(err);
+        }
         res.json(result);
     });
 });
