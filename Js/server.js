@@ -104,12 +104,14 @@ app.put('/usuarios/:id', (req, res) => {
 app.post('/pessoas', (req, res) => {
     const { nome, cpf, nascimento, pessoa_tipo_id } = req.body;
 
-    const sql = "INSERT INTO tbPessoas (nome, cpf, nascimento, pessoa_tipo_id) VALUES (?, ?, ?, ?)";
+    // coloquei NULL e 1 como valores padrão para eles não travarem o banco
+    const sql = "INSERT INTO tbPessoas (nome, cpf, nascimento, pessoa_tipo_id, telefone, atualizado_por) VALUES (?, ?, ?, ?, NULL, 1)";
 
     db.query(sql, [nome, cpf, nascimento, pessoa_tipo_id], (err, result) => {
         if (err) {
-            console.error("Erro ao inserir pessoa:", err);
-            return res.status(500).json({ msg: "Erro ao salvar pessoa no banco", erro: err });
+            console.error("ERRO COMPLETO:", err);
+            // Isso vai mostrar pro professor o erro amigável se algo der errado
+            return res.status(500).json({ msg: "Erro no banco: " + (err.sqlMessage || "Verifique os campos") });
         }
         res.status(200).json({ msg: "Pessoa cadastrada com sucesso!" });
     });
