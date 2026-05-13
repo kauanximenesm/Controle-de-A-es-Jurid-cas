@@ -104,13 +104,13 @@ app.put('/usuarios/:id', (req, res) => {
 app.post('/pessoas', (req, res) => {
     const { nome, cpf, nascimento, pessoa_tipo_id } = req.body;
 
-    // coloquei NULL e 1 como valores padrão para eles não travarem o banco
+    // coloquei NULL e 1 como valores padrão 
     const sql = "INSERT INTO tbPessoas (nome, cpf, nascimento, pessoa_tipo_id, telefone, atualizado_por) VALUES (?, ?, ?, ?, NULL, 1)";
 
     db.query(sql, [nome, cpf, nascimento, pessoa_tipo_id], (err, result) => {
         if (err) {
             console.error("ERRO COMPLETO:", err);
-            // Isso vai mostrar pro professor o erro amigável se algo der errado
+    
             return res.status(500).json({ msg: "Erro no banco: " + (err.sqlMessage || "Verifique os campos") });
         }
         res.status(200).json({ msg: "Pessoa cadastrada com sucesso!" });
@@ -118,10 +118,12 @@ app.post('/pessoas', (req, res) => {
 });
 
 // --- ROTA PARA LISTAR PESSOAS (Sprint 7 - Visualização) ---
+// --- SPRINT 7: GERENCIAMENTO DE PESSOAS (CRUD) ---
+
+// 1. ROTA PARA LISTAR 
 app.post('/listar-pessoas', (req, res) => {
-    // Usamos LEFT JOIN para garantir que, mesmo se o tipo estiver estranho, a pessoa apareça
     const sql = `
-        SELECT p.nome, p.cpf, p.nascimento, t.nome as tipo 
+        SELECT p.pessoa_id, p.nome, p.cpf, p.nascimento, t.nome as tipo 
         FROM tbPessoas p 
         LEFT JOIN tbPessoaTipo t ON p.pessoa_tipo_id = t.pessoa_tipo_id
     `;
@@ -134,12 +136,30 @@ app.post('/listar-pessoas', (req, res) => {
     });
 });
 
+// 2. ROTA PARA EDITAR 
 app.post('/editar-pessoa', (req, res) => {
-    const { id, nome, cpf, nascimento, pessoa_tipo_id } = req.body;
-    const sql = "UPDATE tbPessoas SET nome = ?, cpf = ?, nascimento = ?, pessoa_tipo_id = ? WHERE pessoa_id = ?";
+    const { id, nome } = req.body; // O 'id' vem do botão que você clicou
+    const sql = "UPDATE tbPessoas SET nome = ? WHERE pessoa_id = ?";
 
-    db.query(sql, [nome, cpf, nascimento, pessoa_tipo_id, id], (err, result) => {
-        if (err) return res.status(500).json(err);
-        res.json({ msg: "Dados atualizados!" });
+    db.query(sql, [nome, id], (err, result) => {
+        if (err) {
+            console.error("Erro ao editar:", err);
+            return res.status(500).json(err);
+        }
+        res.json({ msg: "Dados atualizados com sucesso!" });
+    });
+});
+
+// 3. ROTA PARA EXCLUIR 
+app.delete('/excluir-pessoa/:id', (req, res) => {
+    const { id } = req.params; // O id vem direto na URL do fetch
+    const sql = "DELETE FROM tbPessoas WHERE pessoa_id = ?";
+
+    db.query(sql, [id], (err, result) => {
+        if (err) {
+            console.error("Erro ao excluir:", err);
+            return res.status(500).json(err);
+        }
+        res.json({ msg: "Registro excluído com sucesso!" });
     });
 });

@@ -3,32 +3,22 @@ async function carregarPessoas() {
         const response = await fetch('https://controle-de-a-es-jurid-cas.onrender.com/listar-pessoas', {
             method: 'POST'
         });
-        
-        if (!response.ok) throw new Error('Erro ao buscar dados do servidor');
-
         const listaPessoas = await response.json();
-        console.log("Dados recebidos do banco:", listaPessoas);
-
         const tabela = document.getElementById('corpoTabela');
         tabela.innerHTML = ""; 
-
-        if (listaPessoas.length === 0) {
-            tabela.innerHTML = "<tr><td colspan='5' style='text-align:center;'>Nenhum registro encontrado no banco.</td></tr>";
-            return;
-        }
 
         listaPessoas.forEach(p => {
             const dataFormatada = p.nascimento ? new Date(p.nascimento).toLocaleDateString('pt-BR', {timeZone: 'UTC'}) : "N/A";
             
+            // Aqui criamos os dois botões na mesma coluna
             const linha = `<tr>
                 <td>${p.nome}</td>
                 <td>${p.cpf}</td>
                 <td>${dataFormatada}</td>
                 <td>${p.tipo || 'Não definido'}</td>
-                <td style="text-align:center;">
-                    <button onclick="editarPessoa(${p.pessoa_id}, '${p.nome}')" style="background:#f1c40f; border:none; padding:5px 10px; border-radius:4px; cursor:pointer;">
-                        ✏️ Editar
-                    </button>
+                <td>
+                    <button onclick="editarPessoa(${p.pessoa_id}, '${p.nome}')" style="background:#f1c40f; border:none; padding:5px 10px; border-radius:4px; cursor:pointer;">✏️ Editar</button>
+                    <button onclick="excluirPessoa(${p.pessoa_id})" style="background:#e74c3c; border:none; padding:5px 10px; border-radius:4px; cursor:pointer; color:white; margin-left:5px;">🗑️ Excluir</button>
                 </td>
             </tr>`;
             tabela.innerHTML += linha;
@@ -38,27 +28,35 @@ async function carregarPessoas() {
     }
 }
 
+// FUNÇÃO PARA EDITAR
 async function editarPessoa(id, nomeAntigo) {
     const novoNome = prompt("Novo nome para " + nomeAntigo + ":", nomeAntigo);
     if (!novoNome) return;
 
-    try {
-        const response = await fetch('https://controle-de-a-es-jurid-cas.onrender.com/editar-pessoa', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ id: id, nome: novoNome })
-        });
+    const response = await fetch('https://controle-de-a-es-jurid-cas.onrender.com/editar-pessoa', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id: id, nome: novoNome })
+    });
 
-        if (response.ok) {
-            alert("Atualizado com sucesso!");
-            carregarPessoas(); // Recarrega a tabela para mostrar a atualização
-        } else {
-            alert("Erro ao atualizar.");
-        }
-    } catch (error) {
-        console.error("Erro na edição:", error);
+    if (response.ok) {
+        alert("Nome atualizado!");
+        carregarPessoas(); 
     }
 }
 
-// Inicia página abre
+// FUNÇÃO PARA EXCLUIR
+async function excluirPessoa(id) {
+    if (!confirm("Tem certeza que deseja excluir?")) return;
+
+    const response = await fetch(`https://controle-de-a-es-jurid-cas.onrender.com/excluir-pessoa/${id}`, {
+        method: 'DELETE'
+    });
+
+    if (response.ok) {
+        alert("Registro removido!");
+        carregarPessoas();
+    }
+}
+
 carregarPessoas();
