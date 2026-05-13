@@ -18,7 +18,7 @@ document.getElementById('formPessoa').addEventListener('submit', async (e) => {
         const result = await response.json();
 
         if (response.ok) {
-            alert("Pessoa cadastrada com sucesso na tbPessoas!");
+            alert("Pessoa cadastrada com sucesso!");
             window.location.href = "PaginaCentral.html";
         } else {
             alert("Erro: " + result.msg);
