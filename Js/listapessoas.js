@@ -43,7 +43,7 @@ async function editarPessoa(id, nomeAntigo) {
     if (!novoNome) return;
 
     try {
-        const response = await fetch('https://controle-de-a-es-jur-cas.onrender.com/editar-pessoa', {
+        const response = await fetch('https://controle-de-a-es-jurid-cas.onrender.com/editar-pessoa', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ id: id, nome: novoNome })
