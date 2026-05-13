@@ -1,6 +1,6 @@
 async function carregarPessoas() {
     try {
-        const response = await fetch('https://controle-de-a-es-jur-cas.onrender.com', {
+        const response = await fetch('https://controle-de-a-es-jurid-cas.onrender.com/listar-pessoas', {
             method: 'POST'
         });
         
