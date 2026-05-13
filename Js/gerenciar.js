@@ -14,7 +14,7 @@ async function carregarTabela() {
                 <td>${u.login}</td>
                 <td>
                     <button class="btn-editar" onclick="editarUsuario(${u.usuario_id}, '${u.nome}', '${u.login}')">✏️ Editar</button>
-                    <button class="btn-excluir" onclick="excluirUsuario(${u.usuario_id})">🗑️ Excluir</button>
+                    <button class="btn-excluir" onclick="excluirUsuario(${u.usuario_id})"> Excluir</button>
                 </td>
             </tr>
         `;
