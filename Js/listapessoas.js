@@ -12,17 +12,21 @@ async function carregarPessoas() {
             
             // Aqui criamos os dois botões na mesma coluna
             const linha = `<tr>
-                <td>${p.nome}</td>
-                <td>${p.cpf}</td>
-                <td>${dataFormatada}</td>
-                <td>${p.tipo || 'Não definido'}</td>
-                <td>
-                    <button onclick="editarPessoa(${p.pessoa_id}, '${p.nome}')" style="background:#f1c40f; border:none; padding:5px 10px; border-radius:4px; cursor:pointer;">✏️ Editar</button>
-                    <button onclick="excluirPessoa(${p.pessoa_id})" style="background:#e74c3c; border:none; padding:5px 10px; border-radius:4px; cursor:pointer; color:white; margin-left:5px;">🗑️ Excluir</button>
-                </td>
-            </tr>`;
-            tabela.innerHTML += linha;
-        });
+        <td><strong>${p.nome}</strong></td>
+        <td>${p.cpf}</td>
+        <td>${dataFormatada}</td>
+        <td><span class="badge-tipo">${p.tipo || 'Cliente'}</span></td>
+        <td style="text-align: center;">
+            <button onclick="editarPessoa(${p.pessoa_id}, '${p.nome}')" class="btn-action btn-edit">
+                <span class="material-icons">edit</span> Editar
+            </button>
+            <button onclick="excluirPessoa(${p.pessoa_id})" class="btn-action btn-delete">
+                <span class="material-icons">delete</span> Excluir
+            </button>
+        </td>
+        </tr>`;
+    tabela.innerHTML += linha;
+    });
     } catch (error) {
         console.error("Erro ao carregar tabela:", error);
     }
