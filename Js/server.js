@@ -50,7 +50,7 @@ app.post('/login', (req, res) => {
         if (err) return res.status(500).json(err);
         
         if (result.length > 0) {
-            // É AQUI O SEGREDO: Você precisa enviar o perfil de volta!
+            //  enviar o perfil de volta!
             res.json({ 
                 msg: "Login realizado!", 
                 perfil: result[0].atualizado_por // Garanta que o nome da coluna está correto
