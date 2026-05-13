@@ -128,22 +128,32 @@
         .material-icons { font-size: 18px; }
     </style>
 </head>
-<body style="background-color: #f4f7f6; padding: 20px;">
-    <h2>👤 Clientes e Pessoas Cadastradas</h2>
-    <table class="tabela-pessoas">
-        <thead>
-            <tr>
-                <th>Nome</th>
-                <th>CPF</th>
-                <th>Nascimento</th>
-                <th>Tipo</th>
-            </tr>
-        </thead>
-        <tbody id="corpoTabela">
+<<body>
+
+    <div class="container-lista">
+        <div class="header-area">
+            <h2><span class="material-icons">groups</span> Clientes e Pessoas Cadastradas</h2>
+        </div>
+        
+        <table class="tabela-pessoas">
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>CPF</th>
+                    <th>Nascimento</th>
+                    <th>Tipo</th>
+                    <th style="text-align: center;">Ações</th>
+                </tr>
+            </thead>
+            <tbody id="corpoTabela">
+                <!-- O JS vai preencher aqui -->
             </tbody>
-    </table>
-    <br>
-    <button onclick="window.location.href='PaginaCentral.html'" class="btn btn-add">Voltar ao Painel</button>
+        </table>
+
+        <button onclick="window.location.href='PaginaCentral.html'" class="btn-voltar">
+            <span class="material-icons">arrow_back</span> Voltar ao Painel
+        </button>
+    </div>
 
     <script src="Js/listapessoas.js"></script>
 </body>
