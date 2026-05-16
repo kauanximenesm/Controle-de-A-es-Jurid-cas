@@ -216,12 +216,15 @@ app.get('/listar-acoes', (req, res) => {
 // 3. (UPDATE)
 app.put('/editar-acao/:id', (req, res) => {
     const { id } = req.params;
-    const { descricao, prazo } = req.body;
-    const sql = "UPDATE tbAcoes SET descricao = ?, prazo = ?, atualizado_em = CURRENT_TIMESTAMP WHERE acao_id = ?";
+    const { descricao, prazo, status_id } = req.body; // Adicionado prazo e status_id aqui
+    
+    const sql = `UPDATE tbAcoes 
+                 SET descricao = ?, prazo = ?, status_id = ?, atualizado_em = CURRENT_TIMESTAMP 
+                 WHERE acao_id = ?`;
 
-    db.query(sql, [descricao, prazo, id], (err, result) => {
+    db.query(sql, [descricao, prazo, status_id, id], (err, result) => {
         if (err) {
-            console.error("Erro ao editar ação:", err);
+            console.error("Erro ao editar ação no banco:", err);
             return res.status(500).json(err);
         }
         res.json({ msg: "Ação atualizada com sucesso!" });
