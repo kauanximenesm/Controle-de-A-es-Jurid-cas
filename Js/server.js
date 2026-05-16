@@ -164,6 +164,22 @@ app.delete('/excluir-pessoa/:id', (req, res) => {
     });
 });
 
+// --- SPRINT 8: CRIAÇÃO DE AÇÃO JURÍDICA ---
+app.post('/cadastrar-acao', (req, res) => {
+    const { descricao, prazo, cliente_id, advogado_id, juiz_id, tipo_acao_id, status_id } = req.body;
+    
+    const sql = `INSERT INTO tbAcoes 
+        (prazo, advogado_id, juiz_id, descricao, cliente_id, tipo_acao_id, status_id, atualizado_por, atualizado_em) 
+        VALUES (?, ?, ?, ?, ?, ?, ?, 1, CURRENT_TIMESTAMP)`;
+
+    db.query(sql, [prazo, advogado_id, juiz_id, descricao, cliente_id, tipo_acao_id, status_id], (err, result) => {
+        if (err) {
+            console.error("Erro interno no banco:", err);
+            return res.status(500).json({ msg: "Erro no banco", erro: err.sqlMessage });
+        }
+        res.status(200).json({ msg: "Sucesso!" });
+    });
+});
 // ==========================================
 // --- SPRINT 8: CRUD DE AÇÕES (tbAcoes) ---
 // ==========================================

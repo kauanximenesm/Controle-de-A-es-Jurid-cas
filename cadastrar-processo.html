@@ -6,68 +6,17 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --primary-color: #3498db;
-            --success-color: #27ae60;
-            --bg-color: #f4f7f6;
-            --text-color: #2c3e50;
-        }
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            padding: 40px 20px;
-            margin: 0;
-        }
-        .container-cadastro {
-            max-width: 550px;
-            margin: auto;
-            background: white;
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
-        }
-        .header-area {
-            border-bottom: 2px solid #eee;
-            padding-bottom: 15px;
-            margin-bottom: 25px;
-        }
+        :root { --primary-color: #3498db; --success-color: #27ae60; --bg-color: #f4f7f6; --text-color: #2c3e50; }
+        body { font-family: 'Inter', sans-serif; background-color: var(--bg-color); color: var(--text-color); padding: 40px 20px; margin: 0; }
+        .container-cadastro { max-width: 550px; margin: auto; background: white; padding: 30px; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); }
+        .header-area { border-bottom: 2px solid #eee; padding-bottom: 15px; margin-bottom: 25px; }
         h2 { margin: 0; font-weight: 600; display: flex; align-items: center; gap: 10px; }
         .form-group { margin-bottom: 20px; }
         label { display: block; font-weight: 600; font-size: 14px; margin-bottom: 8px; color: #7f8c8d; }
-        input, textarea, select {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid #ddd;
-            border-radius: 6px;
-            font-size: 14px;
-            box-sizing: border-box;
-            background-color: white;
-        }
+        input, textarea, select { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 6px; font-size: 14px; box-sizing: border-box; background-color: white; }
         input:focus, textarea:focus, select:focus { border-color: var(--primary-color); outline: none; }
-        .btn-salvar {
-            background-color: var(--success-color);
-            color: white;
-            border: none;
-            padding: 14px;
-            border-radius: 6px;
-            cursor: pointer;
-            width: 100%;
-            font-size: 16px;
-            font-weight: 600;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-        }
-        .btn-cancelar {
-            display: block;
-            text-align: center;
-            margin-top: 15px;
-            color: #95a5a6;
-            text-decoration: none;
-            font-size: 14px;
-        }
+        .btn-salvar { background-color: var(--success-color); color: white; border: none; padding: 14px; border-radius: 6px; cursor: pointer; width: 100%; font-size: 16px; font-weight: 600; display: inline-flex; align-items: center; justify-content: center; gap: 8px; }
+        .btn-cancelar { display: block; text-align: center; margin-top: 15px; color: #95a5a6; text-decoration: none; font-size: 14px; }
     </style>
 </head>
 <body>
@@ -80,7 +29,7 @@
     <form id="formAcao">
         <div class="form-group">
             <label>Resumo / Descrição do Processo</label>
-            <textarea id="descricao" required rows="3" placeholder="Ex: Ação revisional de contrato de financiamento..."></textarea>
+            <textarea id="descricao" required rows="3" placeholder="Ex: Ação revisional de contrato..."></textarea>
         </div>
 
         <div class="form-group">
@@ -139,10 +88,9 @@
 </div>
 
 <script>
-    // Função para carregar as pessoas do banco e preencher as caixas de escolha
     async function carregarSeletores() {
         try {
-            // Puxa as pessoas direto da rota do Sprint 7 que já está pronta!
+            // Busca as pessoas usando a rota que já existe e funciona no seu server
             const response = await fetch('https://controle-de-a-es-jurid-cas.onrender.com/listar-pessoas', {
                 method: 'POST'
             });
@@ -155,12 +103,10 @@
             selectAdvogado.innerHTML = '<option value="">Selecione o Advogado</option>';
             
             pessoas.forEach(p => {
-                // Se for Cliente (Tipo Cliente ou id correspondente)
                 if (p.tipo === 'Cliente') {
-                    selectCliente.innerHTML += `<option value="${p.pessoa_id}">${p.nome} (ID: ${p.pessoa_id})</option>`;
+                    selectCliente.innerHTML += `<option value="${p.pessoa_id}">${p.nome}</option>`;
                 } else {
-                    // Se não for cliente, assume que é advogado
-                    selectAdvogado.innerHTML += `<option value="${p.pessoa_id}">${p.nome} (ID: ${p.pessoa_id})</option>`;
+                    selectAdvogado.innerHTML += `<option value="${p.pessoa_id}">${p.nome}</option>`;
                 }
             });
         } catch (error) {
@@ -168,7 +114,6 @@
         }
     }
 
-    // Envia os dados selecionados para o servidor
     document.getElementById('formAcao').addEventListener('submit', async (e) => {
         e.preventDefault();
 
@@ -182,27 +127,21 @@
             status_id: parseInt(document.getElementById('status_id').value)
         };
 
-        try {
-            const response = await fetch('https://controle-de-a-es-jurid-cas.onrender.com/cadastrar-acao', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(dados)
-            });
+        const response = await fetch('https://controle-de-a-es-jurid-cas.onrender.com/cadastrar-acao', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(dados)
+        });
 
-            if (response.ok) {
-                alert("Ação protocolada com sucesso!");
-                window.location.href = 'listaacoes.html';
-            } else {
-                alert("Erro ao salvar no banco. Verifique as chaves estrangeiras.");
-            }
-        } catch (error) {
-            console.error("Erro na requisição:", error);
+        if (response.ok) {
+            alert("Ação criada com sucesso!");
+            window.location.href = 'listaacoes.html';
+        } else {
+            alert("Erro ao salvar no banco.");
         }
     });
 
-    // Inicia a carga das caixas de escolha assim que abre a tela
     carregarSeletores();
 </script>
-
 </body>
 </html>
