@@ -6,17 +6,68 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
     <style>
-        :root { --primary-color: #3498db; --success-color: #27ae60; --bg-color: #f4f7f6; --text-color: #2c3e50; }
-        body { font-family: 'Inter', sans-serif; background-color: var(--bg-color); color: var(--text-color); padding: 40px 20px; margin: 0; }
-        .container-cadastro { max-width: 550px; margin: auto; background: white; padding: 30px; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); }
-        .header-area { border-bottom: 2px solid #eee; padding-bottom: 15px; margin-bottom: 25px; }
+        :root {
+            --primary-color: #3498db;
+            --success-color: #27ae60;
+            --bg-color: #f4f7f6;
+            --text-color: #2c3e50;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            padding: 40px 20px;
+            margin: 0;
+        }
+        .container-cadastro {
+            max-width: 550px;
+            margin: auto;
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+        }
+        .header-area {
+            border-bottom: 2px solid #eee;
+            padding-bottom: 15px;
+            margin-bottom: 25px;
+        }
         h2 { margin: 0; font-weight: 600; display: flex; align-items: center; gap: 10px; }
         .form-group { margin-bottom: 20px; }
         label { display: block; font-weight: 600; font-size: 14px; margin-bottom: 8px; color: #7f8c8d; }
-        input, textarea, select { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 6px; font-size: 14px; box-sizing: border-box; background-color: white; }
+        input, textarea, select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 14px;
+            box-sizing: border-box;
+            background-color: white;
+        }
         input:focus, textarea:focus, select:focus { border-color: var(--primary-color); outline: none; }
-        .btn-salvar { background-color: var(--success-color); color: white; border: none; padding: 14px; border-radius: 6px; cursor: pointer; width: 100%; font-size: 16px; font-weight: 600; display: inline-flex; align-items: center; justify-content: center; gap: 8px; }
-        .btn-cancelar { display: block; text-align: center; margin-top: 15px; color: #95a5a6; text-decoration: none; font-size: 14px; }
+        .btn-salvar {
+            background-color: var(--success-color);
+            color: white;
+            border: none;
+            padding: 14px;
+            border-radius: 6px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 16px;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        .btn-cancelar {
+            display: block;
+            text-align: center;
+            margin-top: 15px;
+            color: #95a5a6;
+            text-decoration: none;
+            font-size: 14px;
+        }
     </style>
 </head>
 <body>
@@ -52,15 +103,6 @@
         </div>
 
         <div class="form-group">
-            <label>Juiz Relator (Opcional)</label>
-            <select id="juiz_id">
-                <option value="">Nenhum / Não definido</option>
-                <option value="12">Dr. Kauan (ID 12)</option>
-                <option value="14">Dr. Alexandre (ID 14)</option>
-            </select>
-        </div>
-
-        <div class="form-group">
             <label>Tipo de Ação</label>
             <select id="tipo_acao_id" required>
                 <option value="1">Cível</option>
@@ -74,8 +116,6 @@
             <select id="status_id" required>
                 <option value="1">Petição Inicial</option>
                 <option value="2">Em Andamento</option>
-                <option value="3">Suspenso</option>
-                <option value="4">Arquivado</option>
             </select>
         </div>
 
@@ -88,9 +128,9 @@
 </div>
 
 <script>
+    // Função para carregar as pessoas do banco para os selects correspondentes
     async function carregarSeletores() {
         try {
-            // Busca as pessoas usando a rota que já existe e funciona no seu server
             const response = await fetch('https://controle-de-a-es-jurid-cas.onrender.com/listar-pessoas', {
                 method: 'POST'
             });
@@ -103,6 +143,7 @@
             selectAdvogado.innerHTML = '<option value="">Selecione o Advogado</option>';
             
             pessoas.forEach(p => {
+                // Filtra pelo tipo que vem da sua rota do Sprint 7
                 if (p.tipo === 'Cliente') {
                     selectCliente.innerHTML += `<option value="${p.pessoa_id}">${p.nome}</option>`;
                 } else {
@@ -114,6 +155,7 @@
         }
     }
 
+    // Envio do formulário mapeando os dados sem o campo juiz
     document.getElementById('formAcao').addEventListener('submit', async (e) => {
         e.preventDefault();
 
@@ -122,22 +164,26 @@
             prazo: document.getElementById('prazo').value,
             cliente_id: parseInt(document.getElementById('cliente_id').value),
             advogado_id: parseInt(document.getElementById('advogado_id').value),
-            juiz_id: document.getElementById('juiz_id').value ? parseInt(document.getElementById('juiz_id').value) : null,
+            juiz_id: null, // Enviando explicitamente null para o banco aceitar sem erro de FK
             tipo_acao_id: parseInt(document.getElementById('tipo_acao_id').value),
             status_id: parseInt(document.getElementById('status_id').value)
         };
 
-        const response = await fetch('https://controle-de-a-es-jurid-cas.onrender.com/cadastrar-acao', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(dados)
-        });
+        try {
+            const response = await fetch('https://controle-de-a-es-jurid-cas.onrender.com/cadastrar-acao', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(dados)
+            });
 
-        if (response.ok) {
-            alert("Ação criada com sucesso!");
-            window.location.href = 'listaacoes.html';
-        } else {
-            alert("Erro ao salvar no banco.");
+            if (response.ok) {
+                alert("Ação criada com sucesso!");
+                window.location.href = 'listaacoes.html';
+            } else {
+                alert("Erro ao salvar no banco. Verifique se os registros de Tipo e Status existem.");
+            }
+        } catch (error) {
+            console.error("Erro na requisição:", error);
         }
     });
 
