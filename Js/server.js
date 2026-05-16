@@ -184,23 +184,6 @@ app.post('/cadastrar-acao', (req, res) => {
 // --- SPRINT 8: CRUD DE AÇÕES (tbAcoes) ---
 // ==========================================
 
-// 1. (CREATE)
-app.post('/cadastrar-acao', (req, res) => {
-    const { prazo, advogado_id, juiz_id, descricao, cliente_id, tipo_acao_id, status_id } = req.body;
-    
-    const sql = `INSERT INTO tbAcoes 
-        (prazo, advogado_id, juiz_id, descricao, cliente_id, tipo_acao_id, status_id, atualizado_por, atualizado_em) 
-        VALUES (?, ?, ?, ?, ?, ?, ?, 1, CURRENT_TIMESTAMP)`;
-
-    db.query(sql, [prazo, advogado_id, juiz_id, descricao, cliente_id, tipo_acao_id, status_id], (err, result) => {
-        if (err) {
-            console.error("Erro ao cadastrar ação:", err);
-            return res.status(500).json({ msg: "Erro no banco ao salvar a ação" });
-        }
-        res.status(200).json({ msg: "Ação cadastrada com sucesso!" });
-    });
-});
-
 // 2. LISTAR AÇÕES 
 app.get('/listar-acoes', (req, res) => {
     const sql = `
@@ -242,6 +225,20 @@ app.put('/editar-acao/:id', (req, res) => {
             return res.status(500).json(err);
         }
         res.json({ msg: "Ação atualizada com sucesso!" });
+    });
+});
+
+// 4. EXCLUIR AÇÃO (DELETE) -
+app.delete('/excluir-acao/:id', (req, res) => {
+    const { id } = req.params;
+    const sql = "DELETE FROM tbAcoes WHERE acao_id = ?";
+
+    db.query(sql, [id], (err, result) => {
+        if (err) {
+            console.error("Erro ao excluir ação no banco:", err);
+            return res.status(500).json(err);
+        }
+        res.json({ msg: "Ação removida com sucesso!" });
     });
 });
 
