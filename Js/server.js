@@ -163,3 +163,82 @@ app.delete('/excluir-pessoa/:id', (req, res) => {
         res.json({ msg: "Registro excluído com sucesso!" });
     });
 });
+
+// ==========================================
+// --- SPRINT 8: CRUD DE AÇÕES (tbAcoes) ---
+// ==========================================
+
+// 1. (CREATE)
+app.post('/cadastrar-acao', (req, res) => {
+    const { prazo, advogado_id, juiz_id, descricao, cliente_id, tipo_acao_id, status_id } = req.body;
+    
+    const sql = `INSERT INTO tbAcoes 
+        (prazo, advogado_id, juiz_id, descricao, cliente_id, tipo_acao_id, status_id, atualizado_por, atualizado_em) 
+        VALUES (?, ?, ?, ?, ?, ?, ?, 1, CURRENT_TIMESTAMP)`;
+
+    db.query(sql, [prazo, advogado_id, juiz_id, descricao, cliente_id, tipo_acao_id, status_id], (err, result) => {
+        if (err) {
+            console.error("Erro ao cadastrar ação:", err);
+            return res.status(500).json({ msg: "Erro no banco ao salvar a ação" });
+        }
+        res.status(200).json({ msg: "Ação cadastrada com sucesso!" });
+    });
+});
+
+// 2. LISTAR AÇÕES 
+app.get('/listar-acoes', (req, res) => {
+    const sql = `
+        SELECT 
+            a.acao_id, 
+            a.prazo, 
+            a.descricao,
+            p_cli.nome AS nome_cliente,
+            p_adv.nome AS nome_advogado,
+            p_juiz.nome AS nome_juiz,
+            t.descricao AS tipo_acao,
+            s.nome AS status_nome
+        FROM tbAcoes a
+        LEFT JOIN tbPessoas p_cli ON a.cliente_id = p_cli.pessoa_id
+        LEFT JOIN tbPessoas p_adv ON a.advogado_id = p_adv.pessoa_id
+        LEFT JOIN tbPessoas p_juiz ON a.juiz_id = p_juiz.pessoa_id
+        LEFT JOIN tbTipoAcao t ON a.tipo_acao_id = t.tipo_acao_id
+        LEFT JOIN tbStatus s ON a.status_id = s.status_id
+    `;
+
+    db.query(sql, (err, result) => {
+        if (err) {
+            console.error("Erro ao listar ações:", err);
+            return res.status(500).json(err);
+        }
+        res.json(result);
+    });
+});
+
+// 3. (UPDATE)
+app.put('/editar-acao/:id', (req, res) => {
+    const { id } = req.params;
+    const { descricao, prazo } = req.body;
+    const sql = "UPDATE tbAcoes SET descricao = ?, prazo = ?, atualizado_em = CURRENT_TIMESTAMP WHERE acao_id = ?";
+
+    db.query(sql, [descricao, prazo, id], (err, result) => {
+        if (err) {
+            console.error("Erro ao editar ação:", err);
+            return res.status(500).json(err);
+        }
+        res.json({ msg: "Ação atualizada com sucesso!" });
+    });
+});
+
+// 4.(DELETE)
+app.delete('/excluir-acao/:id', (req, res) => {
+    const { id } = req.params;
+    const sql = "DELETE FROM tbAcoes WHERE acao_id = ?";
+
+    db.query(sql, [id], (err, result) => {
+        if (err) {
+            console.error("Erro ao excluir ação:", err);
+            return res.status(500).json(err);
+        }
+        res.json({ msg: "Ação removida com sucesso!" });
+    });
+});
