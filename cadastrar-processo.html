@@ -35,15 +35,16 @@
         h2 { margin: 0; font-weight: 600; display: flex; align-items: center; gap: 10px; }
         .form-group { margin-bottom: 20px; }
         label { display: block; font-weight: 600; font-size: 14px; margin-bottom: 8px; color: #7f8c8d; }
-        input, textarea {
+        input, textarea, select {
             width: 100%;
             padding: 12px;
             border: 1px solid #ddd;
             border-radius: 6px;
             font-size: 14px;
             box-sizing: border-box;
+            background-color: white;
         }
-        input:focus, textarea:focus { border-color: var(--primary-color); outline: none; }
+        input:focus, textarea:focus, select:focus { border-color: var(--primary-color); outline: none; }
         .btn-salvar {
             background-color: var(--success-color);
             color: white;
@@ -88,28 +89,45 @@
         </div>
 
         <div class="form-group">
-            <label>ID do Cliente</label>
-            <input type="number" id="cliente_id" required placeholder="Consulte o ID na lista de clientes">
+            <label>Cliente / Parte Interessada</label>
+            <select id="cliente_id" required>
+                <option value="">Carregando clientes...</option>
+            </select>
         </div>
 
         <div class="form-group">
-            <label>ID do Advogado Responsável</label>
-            <input type="number" id="advogado_id" required placeholder="ID do advogado do caso">
+            <label>Advogado Responsável</label>
+            <select id="advogado_id" required>
+                <option value="">Carregando advogados...</option>
+            </select>
         </div>
 
         <div class="form-group">
-            <label>ID do Juiz Relator</label>
-            <input type="number" id="juiz_id" placeholder="ID do juiz cadastrado se houver">
+            <label>Juiz Relator (Opcional)</label>
+            <select id="juiz_id">
+                <option value="">Nenhum / Não definido</option>
+                <option value="12">Dr. Kauan (ID 12)</option>
+                <option value="14">Dr. Alexandre (ID 14)</option>
+            </select>
         </div>
 
         <div class="form-group">
-            <label>ID do Tipo de Ação</label>
-            <input type="number" id="tipo_acao_id" required placeholder="Ex: 1 para Cível, 2 para Trabalhista...">
+            <label>Tipo de Ação</label>
+            <select id="tipo_acao_id" required>
+                <option value="1">Cível</option>
+                <option value="2">Trabalhista</option>
+                <option value="3">Criminal</option>
+            </select>
         </div>
 
         <div class="form-group">
-            <label>ID do Status Inicial</label>
-            <input type="number" id="status_id" required placeholder="Ex: 1 para Inicial, 2 para Em Andamento...">
+            <label>Status Inicial</label>
+            <select id="status_id" required>
+                <option value="1">Petição Inicial</option>
+                <option value="2">Em Andamento</option>
+                <option value="3">Suspenso</option>
+                <option value="4">Arquivado</option>
+            </select>
         </div>
 
         <button type="submit" class="btn-salvar">
@@ -121,6 +139,36 @@
 </div>
 
 <script>
+    // Função para carregar as pessoas do banco e preencher as caixas de escolha
+    async function carregarSeletores() {
+        try {
+            // Puxa as pessoas direto da rota do Sprint 7 que já está pronta!
+            const response = await fetch('https://controle-de-a-es-jurid-cas.onrender.com/listar-pessoas', {
+                method: 'POST'
+            });
+            const pessoas = await response.json();
+            
+            const selectCliente = document.getElementById('cliente_id');
+            const selectAdvogado = document.getElementById('advogado_id');
+            
+            selectCliente.innerHTML = '<option value="">Selecione o Cliente</option>';
+            selectAdvogado.innerHTML = '<option value="">Selecione o Advogado</option>';
+            
+            pessoas.forEach(p => {
+                // Se for Cliente (Tipo Cliente ou id correspondente)
+                if (p.tipo === 'Cliente') {
+                    selectCliente.innerHTML += `<option value="${p.pessoa_id}">${p.nome} (ID: ${p.pessoa_id})</option>`;
+                } else {
+                    // Se não for cliente, assume que é advogado
+                    selectAdvogado.innerHTML += `<option value="${p.pessoa_id}">${p.nome} (ID: ${p.pessoa_id})</option>`;
+                }
+            });
+        } catch (error) {
+            console.error("Erro ao carregar seletores:", error);
+        }
+    }
+
+    // Envia os dados selecionados para o servidor
     document.getElementById('formAcao').addEventListener('submit', async (e) => {
         e.preventDefault();
 
@@ -142,15 +190,18 @@
             });
 
             if (response.ok) {
-                alert("Ação protocolada com sucesso no banco de dados!");
-                window.location.href = 'listaacoes.html'; // Leva direto para a tabela após salvar
+                alert("Ação protocolada com sucesso!");
+                window.location.href = 'listaacoes.html';
             } else {
-                alert("Erro ao salvar. Verifique se os IDs inseridos existem nas tabelas pai.");
+                alert("Erro ao salvar no banco. Verifique as chaves estrangeiras.");
             }
         } catch (error) {
             console.error("Erro na requisição:", error);
         }
     });
+
+    // Inicia a carga das caixas de escolha assim que abre a tela
+    carregarSeletores();
 </script>
 
 </body>
