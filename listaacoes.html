@@ -151,16 +151,16 @@
                 
                 const linha = `<tr>
                     <td><strong>${a.descricao}</strong></td>
-                    <td>${a.tipo_acao || 'Não definido'}</td>
+                    <td>${a.tipo_acao || 'Cível'}</td>
                     <td>${a.nome_cliente || 'N/A'}</td>
                     <td>${a.nome_advogado || 'N/A'}</td>
                     <td>${prazoFormatado}</td>
-                    <td><span style="font-weight:600; color: #2980b9;">${a.status_nome || 'Inicial'}</span></td>
-                    <td style="text-align: center;">
+                    <td><span style="font-weight:600; color: #2980b9;">${a.status_nome || 'Petição Inicial'}</span></td>
+                    <td style="text-align: center; white-space: nowrap;">
                         <button onclick="editarAcao(${a.acao_id}, '${a.descricao}')" class="btn-action btn-edit">
                             <span class="material-icons">edit</span>
                         </button>
-                        <button onclick="excluirAcao(${a.acao_id})" class="btn-action btn-delete" style="margin-left:5px;">
+                        <button onclick="excluirAcao(${a.acao_id})" class="btn-action btn-delete">
                             <span class="material-icons">delete</span>
                         </button>
                     </td>
@@ -176,28 +176,44 @@
         const novaDesc = prompt("Atualizar descrição do processo:", descAntiga);
         if (!novaDesc) return;
 
-        const response = await fetch(`https://controle-de-a-es-jurid-cas.onrender.com/editar-acao/${id}`, {
-            method: 'PUT',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ descricao: novaDesc, prazo: new Date().toISOString().split('T')[0] })
-        });
+        try {
+            const response = await fetch(`https://controle-de-a-es-jurid-cas.onrender.com/editar-acao/${id}`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ descricao: novaDesc })
+            });
 
-        if (response.ok) {
-            alert("Processo atualizado!");
-            carregarAcoes();
+            if (response.ok) {
+                alert("Processo atualizado!");
+                carregarAcoes();
+            }
+        } catch (error) {
+            console.error("Erro ao editar:", error);
         }
     }
 
     async function excluirAcao(id) {
-        if (!confirm("Tem certeza que deseja arquivar/excluir esta ação processual?")) return;
+        // CONFIRMAÇÃO COM A SUA FRASE DA PRINT
+        const confira = confirm("Tem certeza que deseja arquivar/excluir esta ação processual?");
+        if (!confira) return;
 
-        const response = await fetch(`https://controle-de-a-es-jurid-cas.onrender.com/excluir-acao/${id}`, {
-            method: 'DELETE'
-        });
+        console.log("Tentando deletar o ID de ação:", id);
 
-        if (response.ok) {
-            alert("Ação removida com sucesso!");
-            carregarAcoes();
+        try {
+            const response = await fetch(`https://controle-de-a-es-jurid-cas.onrender.com/excluir-acao/${id}`, {
+                method: 'DELETE'
+            });
+
+            if (response.ok) {
+                alert("Ação removida com sucesso!");
+                carregarAcoes(); // Recarrega a tabela na hora
+            } else {
+                const erroTexto = await response.text();
+                alert("Erro ao tentar deletar: " + erroTexto);
+            }
+        } catch (error) {
+            console.error("Erro na requisição de exclusão:", error);
+            alert("Erro de conexão ao tentar deletar.");
         }
     }
 
