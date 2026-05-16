@@ -246,15 +246,25 @@ app.put('/editar-acao/:id', (req, res) => {
 });
 
 // 4.(DELETE)
-app.delete('/excluir-acao/:id', (req, res) => {
-    const { id } = req.params;
-    const sql = "DELETE FROM tbAcoes WHERE acao_id = ?";
+async function excluirAcao(id) {
+    // MENSSAGEM DE CONFIRMAÇÃO PROFISSIONAL
+    const confira = confirm("Você tem certeza que quer deletar essa ação?");
+    
+    // Se o usuário clicar em "Cancelar", para o código aqui e não deleta nada
+    if (!confira) return;
 
-    db.query(sql, [id], (err, result) => {
-        if (err) {
-            console.error("Erro ao excluir ação:", err);
-            return res.status(500).json(err);
+    try {
+        const response = await fetch(`https://controle-de-a-es-jurid-cas.onrender.com/excluir-acao/${id}`, {
+            method: 'DELETE'
+        });
+
+        if (response.ok) {
+            alert("Ação removida com sucesso!");
+            carregarAcoes(); // Atualiza a tabela na hora
+        } else {
+            alert("Erro ao tentar deletar a ação do banco.");
         }
-        res.json({ msg: "Ação removida com sucesso!" });
-    });
-});
+    } catch (error) {
+        console.error("Erro na requisição de exclusão:", error);
+    }
+}
