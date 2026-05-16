@@ -2,124 +2,56 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>Gerenciar Ações | CJuris</title>
+    <title>JurisControl | Lista de Ações</title>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
     <style>
         :root {
             --primary-color: #3498db;
-            --success-color: #27ae60;
             --danger-color: #e74c3c;
-            --warning-color: #f39c12;
+            --warning-color: #e67e22;
             --bg-color: #f4f7f6;
             --text-color: #2c3e50;
         }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            padding: 40px 20px;
-            margin: 0;
-        }
-
-        .container-lista {
-            max-width: 1100px;
-            margin: auto;
-            background: white;
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
-        }
-
-        .header-area {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 2px solid #eee;
-            padding-bottom: 15px;
-            margin-bottom: 25px;
-        }
-
-        h2 { margin: 0; font-weight: 600; display: flex; align-items: center; gap: 10px; }
-
-        .tabela-acoes { width: 100%; border-collapse: collapse; }
-
-        .tabela-acoes th {
-            background-color: #f8f9fa;
-            color: #7f8c8d;
-            font-weight: 600;
-            text-transform: uppercase;
-            font-size: 11px;
-            letter-spacing: 1px;
-            padding: 15px;
-            text-align: left;
-            border-bottom: 2px solid #eee;
-        }
-
-        .tabela-acoes td {
-        padding: 15px;
-        border-bottom: 1px solid #f1f1f1;
-        font-size: 14px;
-        max-width: 300px;         
-        word-wrap: break-word;    
-        white-space: normal;      
-}
-        .tabela-acoes tr:hover { background-color: #fcfcfc; }
-
-        .btn-action {
-            border: none;
-            padding: 6px 10px;
-            border-radius: 6px;
-            cursor: pointer;
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
-            transition: all 0.2s;
-            font-size: 12px;
-            font-weight: 600;
-        }
+        body { font-family: 'Inter', sans-serif; background-color: var(--bg-color); color: var(--text-color); margin: 0; padding: 40px 20px; }
+        .container { max-width: 1100px; margin: auto; background: white; padding: 30px; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); }
+        h2 { margin-top: 0; display: flex; align-items: center; gap: 10px; }
+        
+        /* Estilos da Tabela */
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th { text-align: left; padding: 12px; border-bottom: 2px solid #eee; color: #7f8c8d; font-weight: 600; }
+        td { padding: 15px; border-bottom: 1px solid #f1f1f1; font-size: 14px; max-width: 300px; word-wrap: break-word; white-space: normal; }
+         
+        .btn-action { border: none; padding: 8px; border-radius: 6px; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; }
         .btn-edit { background-color: var(--warning-color); color: white; }
-        .btn-delete { 
-        background-color: var(--danger-color); 
-        color: white; 
-        margin-left: 8px; 
-        }
-        .btn-delete:hover { background-color: #c0392b; }
+        .btn-delete { background-color: var(--danger-color); color: white; margin-left: 8px; }
+        .btn-voltar { display: inline-flex; align-items: center; gap: 5px; color: var(--primary-color); text-decoration: none; font-weight: 600; margin-bottom: 20px; }
 
-        .btn-voltar {
-            background-color: var(--primary-color);
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 14px;
-            margin-top: 20px;
-        }
-        .material-icons { font-size: 16px; }
+        .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5); align-items: center; justify-content: center; }
+        .modal-content { background: white; padding: 25px; border-radius: 10px; width: 100%; max-width: 450px; box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
+        .modal-header { font-size: 18px; font-weight: 600; margin-bottom: 15px; border-bottom: 1px solid #eee; padding-bottom: 10px; }
+        .form-group { margin-bottom: 15px; }
+        .form-group label { display: block; font-size: 13px; font-weight: 600; color: #7f8c8d; margin-bottom: 5px; }
+        .form-group input, .form-group textarea, .form-group select { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px; box-sizing: border-box; }
+        .modal-actions { display: flex; justify-content: flex-end; gap: 10px; margin-top: 20px; }
+        .btn-cancel { background: #95a5a6; color: white; border: none; padding: 10px 15px; border-radius: 6px; cursor: pointer; }
+        .btn-save-modal { background: #27ae60; color: white; border: none; padding: 10px 15px; border-radius: 6px; cursor: pointer; }
     </style>
 </head>
 <body>
 
-<div class="container-lista">
-    <div class="header-area">
-        <h2><span class="material-icons">gavel</span> Painel de Processos e Ações</h2>
-    </div>
-
-    <table class="tabela-acoes">
+<div class="container">
+    <a href="PaginaCentral.html" class="btn-voltar"><span class="material-icons">arrow_back</span> Voltar ao Painel</a>
+    <h2><span class="material-icons">assignment</span> Processos e Ações Jurídicas</h2>
+    
+    <table>
         <thead>
             <tr>
-                <th>Descrição / Resumo</th>
+                <th>Descrição</th>
                 <th>Tipo</th>
                 <th>Cliente</th>
                 <th>Advogado</th>
-                <th>Prazo Final</th>
+                <th>Prazo</th>
                 <th>Status</th>
                 <th style="text-align: center;">Ações</th>
             </tr>
@@ -127,26 +59,56 @@
         <tbody id="corpoTabelaAcoes">
             </tbody>
     </table>
+</div>
 
-    <a href="PaginaCentral.html" class="btn-voltar">
-        <span class="material-icons">arrow_back</span> Voltar ao Painel
-    </a>
+<div id="modalEditar" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">Editar Ação Processual</div>
+        <input type="hidden" id="edit-id">
+        
+        <div class="form-group">
+            <label>Descrição do Processo</label>
+            <textarea id="edit-descricao" rows="3" required></textarea>
+        </div>
+        
+        <div class="form-group">
+            <label>Prazo Limite / Audiência</label>
+            <input type="date" id="edit-prazo" required>
+        </div>
+        
+        <div class="form-group">
+            <label>Status do Processo</label>
+            <select id="edit-status" required>
+                <option value="1">Petição Inicial</option>
+                <option value="2">Em Andamento</option>
+                <option value="3">Suspenso</option>
+                <option value="4">Arquivado</option>
+            </select>
+        </div>
+        
+        <div class="modal-actions">
+            <button onclick="fecharModal()" class="btn-cancel">Cancelar</button>
+            <button onclick="salvarEdicao()" class="btn-save-modal">Salvar Alterações</button>
+        </div>
+    </div>
 </div>
 
 <script>
+    let acoesGerais = []; 
+
     async function carregarAcoes() {
         try {
             const response = await fetch('https://controle-de-a-es-jurid-cas.onrender.com/listar-acoes');
-            const acoes = await response.json();
+            acoesGerais = await response.json();
             const tabela = document.getElementById('corpoTabelaAcoes');
             tabela.innerHTML = "";
 
-            if (acoes.length === 0) {
+            if (acoesGerais.length === 0) {
                 tabela.innerHTML = "<tr><td colspan='7' style='text-align:center;'>Nenhum processo em andamento.</td></tr>";
                 return;
             }
 
-            acoes.forEach(a => {
+            acoesGerais.forEach(a => {
                 const prazoFormatado = a.prazo ? new Date(a.prazo).toLocaleDateString('pt-BR', {timeZone: 'UTC'}) : "Sem prazo";
                 
                 const linha = `<tr>
@@ -157,7 +119,7 @@
                     <td>${prazoFormatado}</td>
                     <td><span style="font-weight:600; color: #2980b9;">${a.status_nome || 'Petição Inicial'}</span></td>
                     <td style="text-align: center; white-space: nowrap;">
-                        <button onclick="editarAcao(${a.acao_id}, '${a.descricao}')" class="btn-action btn-edit">
+                        <button onclick="abrirModalEdicao(${a.acao_id})" class="btn-action btn-edit">
                             <span class="material-icons">edit</span>
                         </button>
                         <button onclick="excluirAcao(${a.acao_id})" class="btn-action btn-delete">
@@ -172,20 +134,50 @@
         }
     }
 
-    async function editarAcao(id, descAntiga) {
-        const novaDesc = prompt("Atualizar descrição do processo:", descAntiga);
-        if (!novaDesc) return;
+    function abrirModalEdicao(id) {
+        const acao = acoesGerais.find(item => item.acao_id === id);
+        if (!acao) return;
+
+        document.getElementById('edit-id').value = id;
+        document.getElementById('edit-descricao').value = acao.descricao;
+        
+        if (acao.prazo) {
+            const dataIso = new Date(acao.prazo).toISOString().split('T')[0];
+            document.getElementById('edit-prazo').value = dataIso;
+        } else {
+            document.getElementById('edit-prazo').value = "";
+        }
+
+        // Mapeia o nome do status de volta para o ID correto
+        const mapaStatus = { "Petição Inicial": 1, "Em Andamento": 2, "Suspenso": 3, "Arquivado": 4 };
+        document.getElementById('edit-status').value = mapaStatus[acao.status_nome] || 1;
+
+        document.getElementById('modalEditar').style.display = 'flex';
+    }
+
+    function fecharModal() {
+        document.getElementById('modalEditar').style.display = 'none';
+    }
+
+    async function salvarEdicao() {
+        const id = document.getElementById('edit-id').value;
+        const descricao = document.getElementById('edit-descricao').value;
+        const prazo = document.getElementById('edit-prazo').value;
+        const status_id = parseInt(document.getElementById('edit-status').value);
 
         try {
             const response = await fetch(`https://controle-de-a-es-jurid-cas.onrender.com/editar-acao/${id}`, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ descricao: novaDesc })
+                body: JSON.stringify({ descricao, prazo, status_id })
             });
 
             if (response.ok) {
-                alert("Processo atualizado!");
+                alert("Processo atualizado com sucesso!");
+                fecharModal();
                 carregarAcoes();
+            } else {
+                alert("Erro ao atualizar o processo.");
             }
         } catch (error) {
             console.error("Erro ao editar:", error);
@@ -193,11 +185,8 @@
     }
 
     async function excluirAcao(id) {
-        // CONFIRMAÇÃO COM A SUA FRASE DA PRINT
         const confira = confirm("Tem certeza que deseja arquivar/excluir esta ação processual?");
         if (!confira) return;
-
-        console.log("Tentando deletar o ID de ação:", id);
 
         try {
             const response = await fetch(`https://controle-de-a-es-jurid-cas.onrender.com/excluir-acao/${id}`, {
@@ -206,14 +195,10 @@
 
             if (response.ok) {
                 alert("Ação removida com sucesso!");
-                carregarAcoes(); // Recarrega a tabela na hora
-            } else {
-                const erroTexto = await response.text();
-                alert("Erro ao tentar deletar: " + erroTexto);
+                carregarAcoes();
             }
         } catch (error) {
-            console.error("Erro na requisição de exclusão:", error);
-            alert("Erro de conexão ao tentar deletar.");
+            console.error("Erro na exclusão:", error);
         }
     }
 
